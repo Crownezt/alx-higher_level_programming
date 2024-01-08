@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "lists.h"
+
+/**
+ * print_listint - a function that prints all elements of a  linked list
+ * @h: pointer to the head of the linked list
+ * Return: number of nodes
+ */
+size_t print_listint(const listint_t *h)
+{
+    const listint_t *current;
+    unsigned int n; /* number of nodes */
+
+    current = h;
+    n = 0;
+    while (current != NULL)
+    {
+        printf("%i\n", current->n);
+        current = current->next;
+        n++;
+    }
+
+    return (n);
+}
+
+/**
+ * add_nodeint_end - a function that adds a new node
+ * at the end of a linked list
+ * @head: pointer to pointer of first node of  linked list
+ * @n: integer
+ * Return: address of the new element, else  NULL
+ */
+listint_t *add_nodeint_end(listint_t **head, const int n)
+{
+    listint_t *new;
+    listint_t *current;
+
+    current = *head;
+
+    new = malloc(sizeof(listint_t));
+    if (new == NULL)
+        return (NULL);
+
+    new->n = n;
+    new->next = NULL;
+
+    if (*head == NULL)
+        *head = new;
+    else
+    {
+        while (current->next != NULL)
+            current = current->next;
+        current->next = new;
+    }
+
+    return (new);
+}
+
+/**
+ * free_listint - a funtion that frees a linked list
+ * @head: pointer to the linked list
+ * Return: void
+ */
+void free_listint(listint_t *head)
+{
+    listint_t *current;
+
+    while (head != NULL)
+    {
+        current = head;
+        head = head->next;
+        free(current);
+    }
+}
+
